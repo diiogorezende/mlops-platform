@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mlflow_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  mlflow:
+    image: mlflow:latest
+    command: mlflow server --backend-store-uri postgresql://postgres:password@postgres:5432/mlflow_db --default-artifact-root /mlflow/artifacts --host 0.0.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      MLFLOW_BACKEND_STORE_URI: postgresql://postgres:password@postgres:5432/mlflow_db
+      MLFLOW_DEFAULT_ARTIFACT_ROOT: /mlflow/artifacts
+    volumes:
+      - ./mlruns:/mlflow/artifacts
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

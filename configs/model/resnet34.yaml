@@ -1,0 +1,3 @@
+defaults:
+  - /resnet34_schema
+  - _self_

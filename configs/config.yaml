@@ -1,5 +1,5 @@
 defaults:
   - _self_
-  - dataset: default_dataset.yaml
-  - model: neural_net.yaml
-  - training: default_train.yaml
+  - data: default_dataset
+  - train: default_train
+  - model: resnet18

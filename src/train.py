@@ -14,18 +14,20 @@ from schemas import (
 
 cs = ConfigStore.instance()
 cs.store(name="train_config", node=PipelineConfig)
-cs.store(group="model", name="resnet18", node=ResNet18Config)
-cs.store(group="model", name="resnet34", node=ResNet34Config)
-cs.store(group="model", name="resnet50", node=ResNet50Config)
-cs.store(group="model", name="gradient_boosting", node=GradientBoostingConfig)
-cs.store(group="model", name="xgboost", node=XGBoostConfig)
-cs.store(group="model", name="lightgbm", node=LightGBMConfig)
-cs.store(group="model", name="catboost", node=CatBoostConfig)
+cs.store(name="resnet18_schema", node=ResNet18Config)
+cs.store(name="resnet34_schema", node=ResNet34Config)
+cs.store(name="resnet50_schema", node=ResNet50Config)
+cs.store(name="gradient_boosting_schema", node=GradientBoostingConfig)
+cs.store(name="xgboost_schema", node=XGBoostConfig)
+cs.store(name="lightgbm_schema", node=LightGBMConfig)
+cs.store(name="catboost_schema", node=CatBoostConfig)
 
 
 @hydra.main(config_path="../configs", config_name="config", version_base=None)
 def main(config: PipelineConfig):
-    print(config)
+    # ConfigDict
+    OmegaConfDict = DictConfig(config)
+    print(OmegaConfDict)
 
 
 if __name__ == "__main__":

@@ -9,23 +9,26 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - mlops-network
 
   mlflow:
-    image: mlflow:latest
-    command: mlflow server --backend-store-uri postgresql://postgres:password@postgres:5432/mlflow_db --default-artifact-root /mlflow/artifacts --host 0.0.0.0
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      MLFLOW_TRACKING_URI: http://mlflow:5000
-      MLFLOW_BACKEND_STORE_URI: postgresql://postgres:password@postgres:5432/mlflow_db
-      MLFLOW_DEFAULT_ARTIFACT_ROOT: /mlflow/artifacts
+    command: mlflow server --backend-store-uri postgresql+psycopg2://postgres:password@postgres:5432/mlflow_db --default-artifact-root /mlflow/artifacts --host 0.0.0.0
     volumes:
       - ./mlruns:/mlflow/artifacts
     ports:
       - "5000:5000"
     depends_on:
       - postgres
+    networks:
+      - mlops-network
 
 volumes:
   postgres_data:
+
+networks:
+    mlops-network:
+        driver: bridge

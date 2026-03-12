@@ -1,6 +1,7 @@
 from hydra.core.config_store import ConfigStore
 import hydra
 from omegaconf import DictConfig
+from models.base import ModelFactory
 from schemas import (
     PipelineConfig, 
     CatBoostConfig, 
@@ -28,6 +29,10 @@ def main(config: PipelineConfig):
     # ConfigDict
     OmegaConfDict = DictConfig(config)
     print(OmegaConfDict)
+
+    model = ModelFactory.create(config.model)
+    print(f"Model created: {type(model).__name__}")
+    print(model)
 
 
 if __name__ == "__main__":

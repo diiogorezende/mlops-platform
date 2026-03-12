@@ -1,0 +1,3 @@
+defaults:
+  - /resnet50_schema
+  - _self_

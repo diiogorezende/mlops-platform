@@ -1,0 +1,3 @@
+defaults:
+  - /resnet18_schema
+  - _self_

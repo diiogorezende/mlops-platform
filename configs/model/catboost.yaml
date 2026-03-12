@@ -1,0 +1,7 @@
+defaults:
+  - /catboost_schema
+  - _self_
+
+iterations: 200
+learning_rate: 0.01
+depth: 6
